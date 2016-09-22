@@ -1,7 +1,7 @@
-# Esri-Earth-Magnetic-Field
+# Earth Magnetic Field
 A non-interactive animating globe showing an approximation of the Earth's magnetic field.
 
-Click [here]() to view the live application.
+Click [here](http://richiecarmichael.github.io/mag/index.html) to view the live application.
 
 ### This application makes use of the following libraries
 *   [ArcGIS API for JavaScript](http://developers.arcgis.com/javascript/) by [Esri](http://www.esri.com)
