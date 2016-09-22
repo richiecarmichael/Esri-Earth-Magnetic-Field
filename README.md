@@ -8,7 +8,7 @@ Click [here]() to view the live application.
 *   [three.js](http://threejs.org/) by [Ricardo Cabello](https://twitter.com/mrdoob) (aka [Mr.doob](https://github.com/mrdoob))
 
 ### External Renderers
-This application is making use of Esri's external renderer to execute low level webgl commands.
+This application is making use of Esri's [external renderer](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-3d-externalRenderers.html) to execute low level [webgl](https://en.wikipedia.org/wiki/WebGL) commands.
 
 ![](./img/mag.jpg)
 
