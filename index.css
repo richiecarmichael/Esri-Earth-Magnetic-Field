@@ -1,4 +1,4 @@
-﻿html, body {
+html, body {
     overflow: hidden;
     margin: 0;
     padding: 0;
@@ -15,4 +15,37 @@
     right: 0;
     color: #000000;
     pointer-events: none;
+}
+
+#buttons {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    margin-left: -112px;
+}
+
+#buttons > div {
+    width: 75px;
+    background-color: blue;
+    cursor: pointer;
+    pointer-events: all;
+    color: white;
+    font-size: 12px;
+    display: inline-block;
+    text-align: center;
+    border: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#buttons > div:hover{
+    background-color: green;
+}
+
+#button > div.active {
+    background-color: aquamarine;
+}
+
+#button > div:not(:first-child){
+    border-left: 1px red solid;
 }

@@ -1,4 +1,4 @@
-﻿define([
+define([
     'esri/Camera',
     'esri/core/declare',
     'esri/views/3d/externalRenderers'
@@ -89,9 +89,6 @@
             this.scene.add(this.ambientLight);
         },
         _createObjects: function () {
-            //
-            var scope = this;
-
             // Geographic pole
             var g1 = new THREE.CylinderBufferGeometry(200000, 200000, RADIUS * 8, 8, 1);
             g1.rotateX(Math.PI / 2);
@@ -101,24 +98,26 @@
                 transparent: true,
                 opacity: 1
             });
-            scope.scene.add(new THREE.Mesh(g1, m1));
+            this.scene.add(new THREE.Mesh(g1, m1));
 
             // Magnetic Pole
-            var g = new THREE.CylinderBufferGeometry(200000, 200000, RADIUS * 8, 8, 1);
-            g.rotateX(Math.PI / 2);
-            g.rotateY((90 - 80.31) * Math.PI / 180);
-            g.rotateZ(-72.62 * Math.PI / 180);
-            var m = new THREE.MeshPhongMaterial({
+            var g2 = new THREE.CylinderBufferGeometry(200000, 200000, RADIUS * 8, 8, 1);
+            g2.rotateX(Math.PI / 2);
+            g2.rotateY((90 - 80.31) * Math.PI / 180);
+            g2.rotateZ(-72.62 * Math.PI / 180);
+            var m2 = new THREE.MeshPhongMaterial({
                 color: new THREE.Color(0xff0000),
                 shininess: 70,
                 transparent: true,
                 opacity: 1
             });
-            scope.scene.add(new THREE.Mesh(g, m));
+            this.scene.add(new THREE.Mesh(g2, m2));
             
             // Add magnetic waves
+            var scope = this;
             LEVELS.forEach(function (level) {
                 for (var i = 0; i < SLICES; i++) {
+                    var offset = Math.sqrt(Math.pow(level.radius, 2) - Math.pow(CORE, 2));
                     var rotation = (i / SLICES) * (2 * Math.PI);
                     var material = new THREE.MeshPhongMaterial({
                         color: level.color,
@@ -126,27 +125,42 @@
                         transparent: true,
                         opacity: level.opacity
                     });
-
                     var geometry = new THREE.TorusBufferGeometry(
                         level.radius,
                         TORUS_TUBE,
                         TORUS_RADIAL_SEGMENTS,
                         TORUS_TUBE_SEGMENTS
                     );
-                    
-                    var offset = Math.sqrt(Math.pow(level.radius, 2) - Math.pow(CORE, 2));
-
                     geometry.translate(0, offset, 0);
                     geometry.rotateY(Math.PI / 2);
                     geometry.rotateZ(rotation);
                     geometry.rotateY((90 - 80.31) * Math.PI / 180);
                     geometry.rotateZ(-72.62 * Math.PI / 180);
 
-                    var torus = new THREE.Mesh(geometry, material);
-
-                    scope.scene.add(torus);
+                    scope.scene.add(new THREE.Mesh(geometry, material));
                 }
             });
+            
+            //
+            var g3 = new THREE.ConeBufferGeometry(
+                RADIUS / 2,   // radius
+                RADIUS * 2,   // height
+                32,           // radius segments
+                1,            // height segments
+                true          // open ended
+            );
+            g3.rotateX(-Math.PI / 2);
+            g3.translate(0, 0, (RADIUS * 2)/2 + CORE);
+            var m3 = new THREE.MeshPhongMaterial({
+                side: THREE.DoubleSide,
+                //transparent: true,
+                map: new THREE.TextureLoader().load( 'img/ab.png' )
+            });
+            var cone1 = new THREE.Mesh(g3,m3);
+            var cone2 = cone1.clone();
+            cone2.rotateX(Math.PI);
+            scope.scene.add(cone1);
+            scope.scene.add(cone2);
         },
         _updateCamera: function (context) {
             // Get Esri's camera
